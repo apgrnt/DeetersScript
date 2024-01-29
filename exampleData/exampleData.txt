@@ -1,0 +1,53 @@
+Philadelphia 76ers at Indiana Pacers
+period: 2
+clock: 2:35
+Team: Indiana Pacers Score: 64
+Team: Philadelphia 76ers Score: 50
+
+
+Utah Jazz at Washington Wizards
+period: 2
+clock: 0.0
+Team: Washington Wizards Score: 56
+Team: Utah Jazz Score: 64
+
+
+Minnesota Timberwolves at Brooklyn Nets
+period: 1
+clock: 1:06
+Team: Brooklyn Nets Score: 27
+Team: Minnesota Timberwolves Score: 23
+
+
+Boston Celtics at Miami Heat
+period: 1
+clock: 3:09
+Team: Miami Heat Score: 18
+Team: Boston Celtics Score: 27
+
+
+Denver Nuggets at New York Knicks
+period: 1
+clock: 2:05
+Team: New York Knicks Score: 30
+Team: Denver Nuggets Score: 17
+
+
+Sacramento Kings at Golden State Warriors
+period: 0
+clock: 0.0
+Team: Golden State Warriors Score: 0
+Team: Sacramento Kings Score: 0
+details: SAC -2.5
+Spread: 2.5
+overUnder: 244.5
+
+
+Chicago Bulls at Los Angeles Lakers
+period: 0
+clock: 0.0
+Team: Los Angeles Lakers Score: 0
+Team: Chicago Bulls Score: 0
+details: LAL -4.5
+Spread: -4.5
+overUnder: 227.5
