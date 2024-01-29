@@ -1,5 +1,4 @@
-# This project's goal is to alert someone when a team predicted to win is losing at 
-half time.
+# This project's goal is to alert someone when a team predicted to win is losing at half time.
 
 It's very early and I'm still kinda getting familiar with the very large blob of response data. 
 I should be able to start working on some actual logic in the next phase. 
