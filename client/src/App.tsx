@@ -17,17 +17,15 @@ function App() {
          .then((response) => response.json())
          .then((data) => {
             setData(data.events);
-            const bar = JSON.parse(localStorage.getItem('odds') || '{}');
+            const localStoreOdds = JSON.parse(localStorage.getItem('odds') || '{}');
             {data.events.map((event: any) => {
                  if(event.competitions[0].odds) {
                     setOddsMap(oddsMap.set(event.id, event.competitions[0].odds[0]));
                 }
-                else if(Object.keys(bar).length){
-                    setOddsMap(oddsMap.set(event.id, bar[event.id]));
+                else if(Object.keys(localStoreOdds).length){
+                    setOddsMap(oddsMap.set(event.id, localStoreOdds[event.id]));
                 }
             })}
-            var midnight = new Date();
-            midnight.setHours(23,59,59,0);
             localStorage.setItem('odds', JSON.stringify(Object.fromEntries(oddsMap)))
          })
          .catch((err) => {
@@ -53,7 +51,7 @@ function App() {
                                     <Grid item xs={6}>
                                       <p>Period/Quarter: {event.status.period}</p>
                                       <p>Clock: {event.status.displayClock}</p>
-                                    {event.competitions.map((comp: any) => {
+                                      {event.competitions.map((comp: any) => {
                                         return (
                                             <div>
                                                 <p>{comp.competitors[0].team.abbreviation}: {comp.competitors[0].score}</p>
