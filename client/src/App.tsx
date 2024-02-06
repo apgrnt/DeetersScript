@@ -7,19 +7,28 @@ import Grid from '@mui/material/Grid';
 
 function App() {
 
+   const nbaUrl = 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
+   const testUrl = '/getGames';
    const [data, setData] = useState<any>([]);
    const [oddsMap, setOddsMap] = useState(new Map());
 
    useEffect(() => {
-      fetch('http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard')
+      fetch(nbaUrl)
          .then((response) => response.json())
          .then((data) => {
             setData(data.events);
-              {data.events.map((event: any) => {
-                if(event.competitions[0].odds) {
-                    { setOddsMap(oddsMap.set(event.id, event.competitions[0].odds[0])) }
+            const bar = JSON.parse(localStorage.getItem('odds') || '{}');
+            {data.events.map((event: any) => {
+                 if(event.competitions[0].odds) {
+                    setOddsMap(oddsMap.set(event.id, event.competitions[0].odds[0]));
                 }
-              })}
+                else if(Object.keys(bar).length){
+                    setOddsMap(oddsMap.set(event.id, bar[event.id]));
+                }
+            })}
+            var midnight = new Date();
+            midnight.setHours(23,59,59,0);
+            localStorage.setItem('odds', JSON.stringify(Object.fromEntries(oddsMap)))
          })
          .catch((err) => {
             console.log(err.message);
@@ -54,9 +63,9 @@ function App() {
                                     })}
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Spread: {oddsMap.get(event.id).spread}</p>
-                                        <p>OverUnder: {oddsMap.get(event.id).overUnder}</p>
-                                        <p>Details: {oddsMap.get(event.id).details}</p>
+                                        {oddsMap.get(event.id) ?  <p>Spread: {oddsMap.get(event.id).spread}</p> : <p>Odds Not available</p>}
+                                        {oddsMap.get(event.id) ? <p>OverUnder: {oddsMap.get(event.id).overUnder}</p> : <p>Odds Not available</p>}
+                                        {oddsMap.get(event.id) ? <p>Details: {oddsMap.get(event.id).details}</p> : <p>Odds Not available</p>}
                                     </Grid>
                                    </Grid>
                                 </CardContent>
