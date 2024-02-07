@@ -8,35 +8,52 @@ import Grid from '@mui/material/Grid';
 function App() {
 
    const nbaUrl = 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
-   const testUrl = '/getGames';
-   const [data, setData] = useState<any>([]);
+   const nccaMenUrl = 'https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard';
+   const [data, setData] = useState([]);
    const [oddsMap, setOddsMap] = useState(new Map());
+   const [selectedUrl, setUrl] = useState(nbaUrl)
+
+   function fetchAPIData() {
+     fetch(selectedUrl)
+     .then((response) => response.json())
+     .then((data) => {
+        setData(data.events);
+        const localStoreOdds = JSON.parse(localStorage.getItem('odds') || '{}');
+        {data.events.map((event: any) => {
+             if(event.competitions[0].odds) {
+                setOddsMap(oddsMap.set(event.id, event.competitions[0].odds[0]));
+            }
+            else if(Object.keys(localStoreOdds).length){
+                setOddsMap(oddsMap.set(event.id, localStoreOdds[event.id]));
+            }
+        })}
+        localStorage.setItem('odds', JSON.stringify(Object.fromEntries(oddsMap)))
+     })
+     .catch((err) => {
+        console.log(err.message);
+     });
+   }
+
+   function onLeagueChange(event){
+    setUrl(event.target.value);
+   };
 
    useEffect(() => {
-      fetch(nbaUrl)
-         .then((response) => response.json())
-         .then((data) => {
-            setData(data.events);
-            const localStoreOdds = JSON.parse(localStorage.getItem('odds') || '{}');
-            {data.events.map((event: any) => {
-                 if(event.competitions[0].odds) {
-                    setOddsMap(oddsMap.set(event.id, event.competitions[0].odds[0]));
-                }
-                else if(Object.keys(localStoreOdds).length){
-                    setOddsMap(oddsMap.set(event.id, localStoreOdds[event.id]));
-                }
-            })}
-            localStorage.setItem('odds', JSON.stringify(Object.fromEntries(oddsMap)))
-         })
-         .catch((err) => {
-            console.log(err.message);
-         });
-   }, []);
+    fetchAPIData();
+   }, [selectedUrl]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <span>Deeter's script</span>
+        <span>
+            Deeter's App
+        </span>
+        <label>Select a league:
+            <select name="test" value={selectedUrl} onChange={onLeagueChange} >
+                <option value={nbaUrl}>NBA</option>
+                <option value={nccaMenUrl}>NCAA Mens</option>
+            </select>
+        </label>
       </header>
       <body className="App-body">
         <Grid container spacing={2}>
