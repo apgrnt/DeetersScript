@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 function App() {
 
    const nbaUrl = 'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
-   const nccaMenUrl = 'https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard';
+   const nccaMenUrl = 'http://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard';
    const [data, setData] = useState([]);
    const [oddsMap, setOddsMap] = useState(new Map());
    const [selectedUrl, setUrl] = useState(nbaUrl)
