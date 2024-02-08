@@ -59,7 +59,7 @@ function App() {
         <Grid container spacing={2}>
              {data.map((event: any) => {
                 return (
-                    <Grid item xs={6}>
+                    <Grid item xs={12} sm={6} md={4}>
                         <div className="card">
                             <Card sx={{ minWidth: 400 }}>
                                 <CardContent>
