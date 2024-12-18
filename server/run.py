@@ -1,5 +1,4 @@
 from flask import Flask
-from main import *
 
 app = Flask(__name__, static_url_path='')
 
@@ -10,8 +9,7 @@ def home():
 
 @app.route('/getGames')
 def getGames():
-    response = callApi()
-    return response
+    return app.send_static_file('exampleApiResponse.json')
 
 
 if __name__ == '__main__':
